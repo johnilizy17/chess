@@ -1,0 +1,25 @@
+{
+  "name": "Educational 3D Chess",
+  "short_name": "3D Chess",
+  "description": "Learn chess with AI-powered 3D educational game",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3182ce",
+  "orientation": "landscape-primary",
+  "categories": ["games", "education"],
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}
