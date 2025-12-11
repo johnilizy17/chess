@@ -55,13 +55,6 @@ export default function ChessPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const toast = useToast()
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null; // <--
 
   const [gameState, setGameState] = useState<GameState>('waiting')
   const [isPlayerTurn, setIsPlayerTurn] = useState(true)
