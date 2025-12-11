@@ -29,6 +29,7 @@ export class ChessEngine {
   }
 
   makeMove(from: Square, to: Square): MoveResult {
+    // console.log(from, to)
     try {
       const move = this.game.move({ from, to, promotion: 'q' })
 

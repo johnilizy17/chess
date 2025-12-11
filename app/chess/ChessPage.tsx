@@ -1,8 +1,10 @@
 'use client'
+
 import {
   Box,
   VStack,
   HStack,
+  Stack,
   Text,
   Button,
   Container,
@@ -233,7 +235,7 @@ export default function ChessPage() {
         }
 
         setIsAIThinking(false)
-      }, 1500) // Delay for thinking effect
+      }, 1500)
 
       return () => clearTimeout(timer)
     }
@@ -254,7 +256,6 @@ export default function ChessPage() {
 
   const undoMove = () => {
     if (chessEngine && moveHistory.length > 0 && gameState === 'playing') {
-      // Undo last two moves (player's move and AI's move)
       chessEngine.undoMove()
       if (moveHistory.length > 1) {
         chessEngine.undoMove()
@@ -262,7 +263,7 @@ export default function ChessPage() {
 
       const newHistory = moveHistory.slice(0, -1)
       if (newHistory.length > 0) {
-        newHistory.pop() // Remove AI move as well
+        newHistory.pop()
       }
 
       setMoveHistory(newHistory)
@@ -288,32 +289,31 @@ export default function ChessPage() {
     <Box minH="100vh" bgGradient="linear(to-br, purple.50, blue.50)" py={6}>
       <Container maxW="8xl">
         {/* Header */}
-        <HStack justify="space-between" mb={6}>
-          <HStack>
-            <Button
-              leftIcon={<Icon as={FaArrowLeft} />}
-              variant="ghost"
-              onClick={() => router.push('/')}
-            >
-              Back to Home
-            </Button>
-            <Divider orientation="vertical" h={8} />
-            <VStack align="start" spacing={0}>
-              <Heading size="lg">3D Chess Game</Heading>
-              <HStack>
-                <Badge colorScheme={difficulty.color} size="lg">
-                  <Icon as={FaRobot} mr={1} />
-                  {difficulty.name} Mode
+        <Stack
+          direction={{ base: 'column', md: 'row' }}
+          justify="space-between"
+          spacing={4}
+          mb={6}
+        >
+          <Button leftIcon={<Icon as={FaArrowLeft} />} variant="ghost" onClick={() => router.push('/')}>
+            Back to Home
+          </Button>
+
+          <VStack align={{ base: 'flex-start', md: 'start' }} spacing={1}>
+            <Heading size="lg">3D Chess Game</Heading>
+            <HStack spacing={2}>
+              <Badge colorScheme={difficulty.color}>
+                <Icon as={FaRobot} mr={1} />
+                {difficulty.name} Mode
+              </Badge>
+              {isAIThinking && (
+                <Badge colorScheme="purple" variant="outline">
+                  <Spinner size="xs" mr={1} />
+                  AI Thinking...
                 </Badge>
-                {isAIThinking && (
-                  <Badge colorScheme="purple" variant="outline">
-                    <Spinner size="xs" mr={1} />
-                    AI Thinking...
-                  </Badge>
-                )}
-              </HStack>
-            </VStack>
-          </HStack>
+              )}
+            </HStack>
+          </VStack>
 
           <GameControls
             gameState={gameState}
@@ -323,12 +323,17 @@ export default function ChessPage() {
             onUndoMove={undoMove}
             canUndo={moveHistory.length > 0 && gameState === 'playing'}
           />
-        </HStack>
+        </Stack>
 
         {/* Main Game Area */}
-        <HStack spacing={8} align="start">
+        <Box
+          display="flex"
+          flexDirection={{ base: 'column', md: 'row' }}
+          gap={{ base: 6, md: 8 }}
+          alignItems="start"
+        >
           {/* 3D Chess Board */}
-          <Box flex="2">
+          <Box flex={{ base: 'unset', md: 2 }} w="full" h={{ base: '300px', md: '500px' }}>
             <ChessBoard3D
               gameState={gameState}
               isPlayerTurn={isPlayerTurn}
@@ -341,7 +346,7 @@ export default function ChessPage() {
           </Box>
 
           {/* Side Panel */}
-          <Box flex="1" minW="400px">
+          <Box flex={{ base: 'unset', md: 1 }} w="full" maxW={{ base: '100%', md: '400px' }} overflowY={{ base: 'auto', md: 'visible' }}>
             <VStack spacing={6}>
               {/* Turn Indicator */}
               <Box
@@ -386,7 +391,7 @@ export default function ChessPage() {
               />
             </VStack>
           </Box>
-        </HStack>
+        </Box>
       </Container>
     </Box>
   )
